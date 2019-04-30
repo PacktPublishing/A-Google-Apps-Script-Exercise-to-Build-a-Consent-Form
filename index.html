@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <style>
+        h1 {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hello World</h1>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+    <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</p>
+    <div class="container">
+        <form id="agreeTOS"> Name:
+            <input type="text" name="userName">
+            <br> Email:
+            <input type="email" name="email">
+            <br> Agree to TOS:
+            <input type="checkbox" value="true" name="terms">
+            <br>
+            <input type="submit" name="submit" value="Submit"> </form>
+    </div>
+    <script>
+        const myForm = document.querySelector('#agreeTOS');
+        const container = document.querySelector('.container');
+        //console.log(myForm);
+        myForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            let myData = {
+                'first': this.querySelector('input[name="userName"]').value
+                , 'email': this.querySelector('input[name="email"]').value
+                , 'agree': this.querySelector('input[name="terms"]').checked
+            , }
+            google.script.run.withSuccessHandler(onSuccess).addData(myData);
+            //https://developers.google.com/apps-script/guides/html/reference/run
+            //console.dir(myData);
+        })
+
+        function onSuccess(data) {
+            if (data.status) {
+                container.innerHTML = '<h1>ID ' + data.trackingid + '</h1>';
+            }
+            console.log(data);
+        }
+    </script>
+</body>
+
+</html>
